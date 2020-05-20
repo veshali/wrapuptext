@@ -123,6 +123,34 @@ def analyze_url():
 
 
 
+@app.route('/compare_summary')
+def compare_summary():
+	return render_template('compare_summary.html')
+
+@app.route('/comparer',methods=['GET','POST'])
+def comparer():
+	start = time.time()
+	if request.method == 'POST':
+		rawtext = request.form['rawtext']
+		final_reading_time = readingTime(rawtext)
+		final_summary_spacy = text_summarizer(rawtext)
+		summary_reading_time = readingTime(final_summary_spacy)
+		# Gensim Summarizer
+		final_summary_gensim = summarize(rawtext)
+		summary_reading_time_gensim = readingTime(final_summary_gensim)
+		# NLTK
+		final_summary_nltk = nltk_summarizer(rawtext)
+		summary_reading_time_nltk = readingTime(final_summary_nltk)
+		# Sumy
+		final_summary_sumy = sumy_summary(rawtext)
+		summary_reading_time_sumy = readingTime(final_summary_sumy)
+
+		end = time.time()
+		final_time = end-start
+	return render_template('compare_summary.html',ctext=rawtext,final_summary_spacy=final_summary_spacy,final_summary_gensim=final_summary_gensim,final_summary_nltk=final_summary_nltk,final_time=final_time,final_reading_time=final_reading_time,summary_reading_time=summary_reading_time,summary_reading_time_gensim=summary_reading_time_gensim,final_summary_sumy=final_summary_sumy,summary_reading_time_sumy=summary_reading_time_sumy,summary_reading_time_nltk=summary_reading_time_nltk)
+
+
+
 @app.route('/about')
 def about():
 	return render_template('index.html')
