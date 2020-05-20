@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>WrapUp</title>
+
+  <!-- CSS  -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link href="static/css/materialize.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+  <link href="static/css/custom.css" type="text/css" rel="stylesheet" media="screen,projection"/>
+   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+
+</head>
+</head>
+<body><div class="nav-wrapper">
+   <nav class="yellow darken-2" role="navigation">
+    <div class="nav-wrapper container">
+      <a id="logo-container" href="#" class="brand-logo">WrapUp</a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="{{url_for('index')}}">Home</a></li>
+         <li><a href="{{url_for('compare_summary')}}">Compare Summarizers</a></li>
+         <li><a href="#aboutapp">About</a></li>
+      </ul>
+
+
+      <a href="#" data-target="nav-mobile" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+    </div>
+  </nav>
+
+
+  {% for file in audio_files %}
+   <audio controls>
+     <source src={{ url_for('static', filename=file) }} type="audio/mpeg">
+   </audio>
+   {% endfor %}
+
+</div>
+	<ul id="nav-mobile" class="sidenav">
+        <li><a href="{{url_for('index')}}">Home</a></li>
+         <li><a href="{{url_for('compare_summary')}}">Compare</a></li>
+         <li><a href="#contactme">About</a></li>
+      </ul>
+<!--Slider -->
+ <section class="slider">
+  <div id="index-banner" class="parallax-container">
+     <ul class="slides">
+      <li>
+        <img src="static/img/backgroundblue.jpg"  alt="">
+        <div class="caption center-align">
+          <h2>Summarization Simplified</h2>
+          <h5 class="light grey-text text-lighten-3 hide-on-small-only">
+           Using SpaCy,Gensim,NLTK and Sumy
+          </h5>
+
+           <div class="center">
+          <a href="{{url_for('index')}}" class="btn-large waves-effect waves-light blue lighten-1">Refresh</a>
+        </div>
+        </div>
+      </li>
+      <li>
+       <img src="static/img/backgroundpurple.jpg" / >
+        <div class="caption left-align">
+          <h2>Text Summarizer with SpaCy</h2>
+          <h5 class="light grey-text text-lighten-3 hide-on-small-only">
+           NLP based App
+          </h5>
+          <a href="#aboutapp" class="btn btn-large waves-effect waves-light light-blue lighten-1">Learn More</a>
+        </div>
+      </li>
+
+    </ul>
+  </div>
+</section>
+
+<!-- Start of Main Section -->
+ <div class="container">
+    <div class="section">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="input-field col s12 m10">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">chrome_reader_mode</i></h2>
+           <form method="POST" action="/analyze">
+         <textarea name="rawtext" cols="3" rows="5" class="form-control" required="true" placeholder="Enter Text Here"></textarea>
+
+         <br/>
+         <button class="btn btn-small waves-effect waves-light light-blue lighten-1" type="reset">Clear</button>
+          <button class="btn btn-small waves-effect waves-light purple lighten-1" type="submit">Summarize</button>
+
+        </form>
+
+          </div>
+        </div>
+
+      </div>
+
+
+
+
+      <style>
+          * {
+            font-family: Verdana, Arial, sans-serif;
+          }
+          a:link {
+            color:#000;
+            text-decoration: none;
+          }
+          a:visited {
+            color:#000;
+          }
+          a:hover {
+            color:#33F;
+          }
+          .button {
+            background: -webkit-linear-gradient(top,#008dfd 0,#0370ea 100%);
+            border: 1px solid #076bd2;
+            border-radius: 3px;
+            color: #fff;
+            display: none;
+            font-size: 13px;
+            font-weight: bold;
+            line-height: 1.3;
+            padding: 8px 25px;
+            text-align: center;
+            text-shadow: 1px 1px 1px #076bd2;
+            letter-spacing: normal;
+          }
+          .center {
+            padding: 10px;
+            text-align: center;
+          }
+          .final {
+            color: black;
+            padding-right: 3px;
+          }
+          .interim {
+            color: gray;
+          }
+          .info {
+            font-size: 14px;
+            text-align: center;
+            color: #777;
+            display: none;
+          }
+          .right {
+            float: right;
+          }
+          .sidebyside {
+            display: inline-block;
+            width: 45%;
+            min-height: 40px;
+            text-align: left;
+            vertical-align: top;
+          }
+          #headline {
+            font-size: 40px;
+            font-weight: 300;
+          }
+          #info {
+            font-size: 20px;
+            text-align: center;
+            color: #777;
+            visibility: hidden;
+          }
+          #results {
+            font-size: 15px;
+            font-weight: bold;
+            border: 2px solid #ddd;
+            padding: 15px;
+            text-align: left;
+            min-height: 300px;
+          }
+          /* #start_button {
+            border: 10;
+            background-color:skyblue;
+            padding: 20px;
+          } */
+        </style>
+        <div id="info">
+          <p id="info_start">Click on the start button and begin speaking.</p>
+          <p id="info_speak_now">Speak now.</p>
+          <p id="info_no_speech">No speech was detected. You may need to adjust your
+            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+              microphone settings</a>.</p>
+          <p id="info_no_microphone" style="display:none">
+            No microphone was found. Ensure that a microphone is installed and that
+            <a href="//support.google.com/chrome/bin/answer.py?hl=en&amp;answer=1407892">
+            microphone settings</a> are configured correctly.</p>
+          <p id="info_allow">Click the "Allow" button above to enable your microphone.</p>
+          <p id="info_denied">Permission to use microphone was denied.</p>
+          <p id="info_blocked">Permission to use microphone is blocked. To change,
+            go to chrome://settings/contentExceptions#media-stream</p>
+          <p id="info_upgrade">Web Speech API is not supported by this browser.
+             Upgrade to <a href="//www.google.com/chrome">Chrome</a>
+             version 25 or later.</p>
+        </div>
+        <div class="right">
+          <button id="start_button" class="btn btn-primary" onclick="startButton(event)">Start</button>
+        </div>
+        <div id="results">
+          <span id="final_span" class="final"></span>
+          <span id="interim_span" class="interim"></span>
+          <p>
+        </div>
+        <div class="center">
+          <div class="center" style="text-align:right">
+            <button id="copy_button" class="button" onclick="copyButton()">
+              Copy and Paste</button>
+            
+          </div>
+
+          <p>
+          <div id="div_language">
+            <select id="select_language" onchange="updateCountry()"></select>
+            &nbsp;&nbsp;
+            <select id="select_dialect"></select>
+          </div>
+        </div>
+        <script>
+        var langs =
+        [['English',         ['en-AU', 'Australia'],
+                            ['en-CA', 'Canada'],
+                            ['en-IN', 'India'],
+                            ['en-NZ', 'New Zealand'],
+                            ['en-ZA', 'South Africa'],
+                            ['en-GB', 'United Kingdom'],
+                            ['en-US', 'United States']],
+         ['Hindi',            ['hi-IN']]];
+
+        for (var i = 0; i < langs.length; i++) {
+          select_language.options[i] = new Option(langs[i][0], i);
+        }
+        select_language.selectedIndex = 0;
+        updateCountry();
+        select_dialect.selectedIndex = 0;
+        showInfo('info_start');
+
+        function updateCountry() {
+          for (var i = select_dialect.options.length - 1; i >= 0; i--) {
+            select_dialect.remove(i);
+          }
+          var list = langs[select_language.selectedIndex];
+          for (var i = 1; i < list.length; i++) {
+            select_dialect.options.add(new Option(list[i][1], list[i][0]));
+          }
+          select_dialect.style.visibility = list[1].length == 1 ? 'hidden' : 'visible';
+        }
+
+        var create_email = false;
+        var final_transcript = '';
+        var recognizing = false;
+        var ignore_onend;
+        var start_timestamp;
+        if (!('webkitSpeechRecognition' in window)) {
+          upgrade();
+        } else {
+          start_button.style.display = 'inline-block';
+          var recognition = new webkitSpeechRecognition();
+          recognition.continuous = true;
+          recognition.interimResults = true;
+
+          recognition.onstart = function() {
+            recognizing = true;
+            showInfo('info_speak_now');
+            var btn = document.getElementById("start_button");
+            //btn.value = 'my value'; // will just add a hidden value
+            btn.innerHTML = 'Stop';
+          };
+
+          recognition.onerror = function(event) {
+            if (event.error == 'no-speech') {
+              showInfo('info_no_speech');
+              ignore_onend = true;
+            }
+            if (event.error == 'audio-capture') {
+              showInfo('info_no_microphone');
+              ignore_onend = true;
+            }
+            if (event.error == 'not-allowed') {
+              if (event.timeStamp - start_timestamp < 100) {
+                showInfo('info_blocked');
+              } else {
+                showInfo('info_denied');
+              }
+              ignore_onend = true;
+            }
+          };
+
+          recognition.onend = function() {
+            recognizing = false;
+
+            if (ignore_onend) {
+              return;
+            }
+            var btn = document.getElementById("start_button");
+            btn.innerHTML = 'Start';
+            if (!final_transcript) {
+              showInfo('info_start');
+              return;
+            }
+            showInfo('');
+
+            if (window.getSelection) {
+              window.getSelection().removeAllRanges();
+              var range = document.createRange();
+              range.selectNode(document.getElementById('final_span'));
+              window.getSelection().addRange(range);
+            }
+            if (create_email) {
+              create_email = false;
+              createEmail();
+            }
+          };
+
+          recognition.onresult = function(event) {
+            var interim_transcript = '';
+            for (var i = event.resultIndex; i < event.results.length; ++i) {
+              if (event.results[i].isFinal) {
+                final_transcript += event.results[i][0].transcript;
+              } else {
+                interim_transcript += event.results[i][0].transcript;
+              }
+            }
+            final_transcript = capitalize(final_transcript);
+            final_span.innerHTML = linebreak(final_transcript);
+            interim_span.innerHTML = linebreak(interim_transcript);
+            if (final_transcript || interim_transcript) {
+              showButtons('inline-block');
+            }
+          };
+        }
+
+        function upgrade() {
+          start_button.style.visibility = 'hidden';
+          showInfo('info_upgrade');
+        }
+
+        var two_line = /\n\n/g;
+        var one_line = /\n/g;
+        function linebreak(s) {
+          return s.replace(two_line, '<p></p>').replace(one_line, '<br>');
+        }
+
+        var first_char = /\S/;
+        function capitalize(s) {
+          return s.replace(first_char, function(m) { return m.toUpperCase(); });
+        }
+
+
+
+        function copyButton() {
+          if (recognizing) {
+            recognizing = false;
+            recognition.stop();
+          }
+          copy_button.style.display = 'none';
+          copy_info.style.display = 'inline-block';
+          showInfo('');
+        }
+
+
+        function startButton(event) {
+          if (recognizing) {
+            recognition.stop();
+            return;
+          }
+          final_transcript = '';
+          recognition.lang = select_dialect.value;
+          recognition.start();
+          ignore_onend = false;
+          final_span.innerHTML = '';
+          interim_span.innerHTML = '';
+
+          showInfo('info_allow');
+          showButtons('none');
+          start_timestamp = event.timeStamp;
+        }
+
+        function showInfo(s) {
+          if (s) {
+            for (var child = info.firstChild; child; child = child.nextSibling) {
+              if (child.style) {
+                child.style.display = child.id == s ? 'inline' : 'none';
+              }
+            }
+            info.style.visibility = 'visible';
+          } else {
+            info.style.visibility = 'hidden';
+          }
+        }
+
+        var current_style;
+        function showButtons(style) {
+          if (style == current_style) {
+            return;
+          }
+          current_style = style;
+          copy_button.style.display = style;
+          email_button.style.display = style;
+          copy_info.style.display = 'none';
+          email_info.style.display = 'none';
+        }
+        </script>
+
+
+        <div class="row">
+        <div class="input-field col s12 m10">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">chrome_reader_mode</i></h2>
+           <form method="POST" action="/analyze_url">
+         <input type="text" name="raw_url" placeholder="Enter URL Here" required="true">
+         <button class="btn btn-small waves-effect waves-light light-blue lighten-1" type="reset">Clear</button>
+          <button class="btn btn-small waves-effect waves-light purple lighten-1" type="submit">Summarize</button>
+
+        </form>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+  <!-- End -->
+
+  <!-- Result Display-->
+  <section class="section section-solutions-about grey darken-2">
+ <div class="container white-text">
+
+      <!--   Icon Section   -->
+      <div class="row">
+        <div class="col s12 m6">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">group</i></h2>
+            <h5 class="center">Your Text</h5>
+             <p>Reading Time: <span style="color:#0091EA;">{{ final_reading_time }} min </span></p>
+            <p class="light">{{ctext}}</p>
+            <div class="alert alert-info" role="alert"><p>Time Elapsed: <span style="color:#0091EA;">{{ final_time }} mins </span></p><br/>
+
+        </div>
+          </div>
+        </div>
+
+        <div class="col s12 m6 grey darken-3">
+          <div class="icon-block">
+            <h2 class="center brown-text"><i class="material-icons">chrome_reader_mode</i></h2>
+            <h5 class="center">Summarized</h5>
+              <div class="" role="alert">
+              <p>Reading Time: <span style="color:#0091EA;">{{ summary_reading_time }} min </span></p>
+        </div>
+            <p class="light">{{ final_summary }}</p>
+
+
+          </div>
+        </div>
+
+      </div>
+      <h3>Summarized in Hindi :</h3>
+<p>{{ translatedText }}</p>
+
+  </div>
+</section>
+
+
+
+  <footer class="page-footer grey darken-4">
+    <div class="container" id="aboutapp">
+      <div class="row">
+        <div class="col l6 s12">
+          <h5 class="white-text">About WrapUp</h5>
+          <p class="grey-text text-lighten-4">Using Spacy,NLTk and Gensim for Text Summarization.</p>
+
+
+        </div>
+   </div>
+    </div>
+    </footer>
+
+
+  <!--  Scripts-->
+  <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+  <script src="static/js/materialize.js"></script>
+  <script src="static/js/init.js"></script>
+<!-- Jesse JCharis -->
+  </body>
+</html>
